@@ -1,0 +1,14 @@
+.place__button-like {
+  background-image: url('../../../images/like-button.svg');
+  background-size: 100% 100%;
+  width: 22px;
+  height: 19px;
+  border: 0;
+  padding: 0;
+  margin-bottom: 3px;
+  transition: .3s;
+}
+
+.place__button-like:hover {
+  transform: scale(1.3);
+}

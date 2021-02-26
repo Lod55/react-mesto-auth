@@ -1,0 +1,11 @@
+.profile__row-block {
+  display: flex;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 915px) {
+  .profile__row-block {
+    justify-content: center;
+  }
+} 

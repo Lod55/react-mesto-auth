@@ -1,0 +1,16 @@
+.place__button-remove {
+  background-image: url('../../../images/button-trash.svg');
+  background-size: 100% 100%;
+  width: 18px;
+  height: 19px;
+  position: absolute;
+  border: 0;
+  padding: 0;
+  top: 18px;
+  right: 15px;
+  transition: .3s;
+}
+
+.place__button-remove:hover {
+  transform: scale(1.3);
+}

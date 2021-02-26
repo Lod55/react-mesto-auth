@@ -1,0 +1,7 @@
+.place__row-block {  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - (21px * 2));
+  margin: 22px auto 22px;
+}
