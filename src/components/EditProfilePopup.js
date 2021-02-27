@@ -11,9 +11,22 @@ const EditProfilePopup = ({
 
   const [inputName, setInputName] = useState(currentUser.name);
   const [inputAbout, setInputAbout] = useState(currentUser.about);
+  const [inputNameValid, setInputNameValid] = useState(true);
+  const [inputAboutValid, setInputAboutValid] = useState(true);
+  const [errorName, setErrorName] = useState();
+  const [errorAbout, setErrorAbout] = useState();
 
-  const handleChangeName = (e) => setInputName(e.target.value);
-  const handleChangeAbout = (e) => setInputAbout(e.target.value);
+  const handleChangeName = (e) => {
+    setInputName(e.target.value)
+    setErrorName(e.target.validationMessage)
+    setInputNameValid(e.target.validity.valid)
+  };
+
+  const handleChangeAbout = (e) => {
+    setInputAbout(e.target.value)
+    setErrorAbout(e.target.validationMessage)
+    setInputAboutValid(e.target.validity.valid)
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +52,11 @@ const EditProfilePopup = ({
       onSubmit={handleSubmit}
     >
       <input
-        className={"popup__input popup__input_type_author"}
+        className={`popup__input popup__input_type_author 
+        ${!inputNameValid
+            ? 'popup__input_state_invalid'
+            : ''
+          }`}
         type={"text"}
         placeholder={"Ваше имя"}
         name={"popup-input-name"}
@@ -49,9 +66,13 @@ const EditProfilePopup = ({
         onChange={handleChangeName}
         required
       />
-      <span id={"popup-input-name-error"} className={"popup__error"}></span>
+      <span id={"popup-input-name-error"} className={"popup__error"}>{errorName}</span>
       <input
-        className={"popup__input popup__input_type_status"}
+        className={`popup__input popup__input_type_status 
+        ${!inputAboutValid
+            ? 'popup__input_state_invalid'
+            : ''
+          }`}
         type={"text"}
         placeholder={"Расскажите о себе"}
         name={"popup-input-status"}
@@ -61,7 +82,7 @@ const EditProfilePopup = ({
         onChange={handleChangeAbout}
         required
       />
-      <span id={"popup-input-status-error"} className={"popup__error"}></span>
+      <span id={"popup-input-status-error"} className={"popup__error"}>{errorAbout}</span>
     </PopupWithForm>
   );
 }

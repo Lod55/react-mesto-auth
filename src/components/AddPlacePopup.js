@@ -9,8 +9,22 @@ const AddPlacePopup = ({
   const [inputName, setInputName] = useState('');
   const [inputLink, setInputLink] = useState('');
 
-  const handleChangeName = (e) => setInputName(e.target.value);
-  const handleChangeLink = (e) => setInputLink(e.target.value);
+  const [inputNameValid, setInputNameValid] = useState(true);
+  const [inputLinkValid, setInputLinkValid] = useState(true);
+  const [errorName, setErrorName] = useState();
+  const [errorLink, setErrorLink] = useState();
+
+  const handleChangeName = (e) => {
+    setInputName(e.target.value)
+    setErrorName(e.target.validationMessage)
+    setInputNameValid(e.target.validity.valid)
+  };
+
+  const handleChangeLink = (e) => {
+    setInputLink(e.target.value)
+    setErrorLink(e.target.validationMessage)
+    setInputLinkValid(e.target.validity.valid)
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +48,11 @@ const AddPlacePopup = ({
       onSubmit={handleSubmit}
     >
       <input
-        className={"popup__input popup__input_type_place-name"}
+        className={`popup__input popup__input_type_place-name 
+        ${!inputNameValid
+            ? 'popup__input_state_invalid'
+            : ''
+          }`}
         type={"text"}
         placeholder={"Название"}
         name={"popup-input-place-name"}
@@ -44,9 +62,13 @@ const AddPlacePopup = ({
         onChange={handleChangeName}
         required
       />
-      <span id={"popup-input-place-name-error"} className={"popup__error"}></span>
+      <span id={"popup-input-place-name-error"} className={"popup__error"}>{errorName}</span>
       <input
-        className={"popup__input popup__input_type_photo"}
+        className={`popup__input popup__input_type_photo 
+        ${!inputLinkValid
+            ? 'popup__input_state_invalid'
+            : ''
+          }`}
         type={"url"} placeholder={"Ссылка на картинку"}
         name={"popup-input-url"}
         minLength={"7"}
@@ -55,7 +77,7 @@ const AddPlacePopup = ({
         onChange={handleChangeLink}
         required
       />
-      <span id={"popup-input-url-error"} className={"popup__error"}></span>
+      <span id={"popup-input-url-error"} className={"popup__error"}>{errorLink}</span>
     </PopupWithForm>
   );
 }

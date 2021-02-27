@@ -8,7 +8,15 @@ const EditAvatarPopup = ({
 }) => {
   const [inputValue, setInputValue] = useState('');
 
-  const handleChangeAvatar = (e) => setInputValue(e.target.value);
+  const [inputValid, setInputValid] = useState(true);
+  const [error, setError] = useState();
+
+
+  const handleChangeAvatar = (e) => {
+    setInputValue(e.target.value);
+    setError(e.target.validationMessage);
+    setInputValid(e.target.validity.valid);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +35,11 @@ const EditAvatarPopup = ({
       onSubmit={handleSubmit}
     >
       <input
-        className={"popup__input popup__input_type_photo"}
+        className={`popup__input popup__input_type_photo 
+        ${!inputValid
+            ? 'popup__input_state_invalid'
+            : ''
+          }`}
         type={"url"}
         placeholder={"Ссылка на аватар"}
         name={"popup-input-url-avatar"}
@@ -37,7 +49,8 @@ const EditAvatarPopup = ({
         value={inputValue}
         required
       />
-      <span id={"popup-input-url-avatar-error"} className={"popup__error"}></span>
+
+      <span id={"popup-input-url-avatar-error"} className={"popup__error"}>{error}</span>
     </PopupWithForm>
   );
 }

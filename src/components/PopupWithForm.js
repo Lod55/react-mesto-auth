@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const PopupWithForm = ({
   children,
@@ -9,13 +9,19 @@ const PopupWithForm = ({
   onClose,
   onSubmit
 }) => {
-  const className = `popup popup_type_${name} ${isOpen
-    ? 'popup_opened'
-    : ''
-    }`;
+  const [isFormValid, setIsFormValid] = useState(false)
+
+  const className = {
+    section: `popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`,
+    button: `button popup__button-submit ${!isFormValid ? 'popup__button-submit_invalid' : ''}`
+  };
+
+  const handleChangeForm = (e) => {
+    setIsFormValid(e.target.validity.valid)
+  }
 
   return (
-    <section className={className}>
+    <section className={className.section}>
       <div className={"popup__container"}>
         <button
           className={"button popup__button-close"}
@@ -29,10 +35,11 @@ const PopupWithForm = ({
           name={name}
           id={"popup-form-edit"}
           onSubmit={onSubmit}
+          onChange={handleChangeForm}
         >
           {children}
           <button
-            className={"button popup__button-submit"}
+            className={className.button}
             type={"submit"}>
             {textButton}
           </button>
