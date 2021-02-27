@@ -15,12 +15,13 @@ const RemovePlacePopup = (props) => {
 
   return (
     <PopupWithForm
-      name={"popup-remove-card"}
-      title={"Вы уверены?"}
-      textButton={"Да"}
+      name="popup-remove-card"
+      title="Вы уверены?"
+      textButton="Да"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      validForm={true}
     />
 
   );

@@ -42,44 +42,46 @@ const AddPlacePopup = (props) => {
 
   return (
     <PopupWithForm
-      name={"popup-add-card"}
-      title={"Новое место"}
-      textButton={"Создать"}
+      name="popup-add-card"
+      title="Новое место"
+      textButton="Создать"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      validForm={false}
     >
       <input
         className={`popup__input popup__input_type_place-name 
         ${!inputNameValid
-            ? 'popup__input_state_invalid'
-            : ''
+            ? ('popup__input_state_invalid')
+            : ('')
           }`}
-        type={"text"}
-        placeholder={"Название"}
-        name={"popup-input-place-name"}
-        minLength={"2"}
-        maxLength={"30"}
+        type="text"
+        placeholder="Название"
+        name="popup-input-place-name"
+        minLength="2"
+        maxLength="30"
         value={inputName}
         onChange={handleChangeName}
         required
       />
-      <span id={"popup-input-place-name-error"} className={"popup__error"}>{errorName}</span>
+      <span id="popup-input-place-name-error" className="popup__error">{errorName}</span>
       <input
         className={`popup__input popup__input_type_photo 
         ${!inputLinkValid
-            ? 'popup__input_state_invalid'
-            : ''
+            ? ('popup__input_state_invalid')
+            : ('')
           }`}
-        type={"url"} placeholder={"Ссылка на картинку"}
-        name={"popup-input-url"}
-        minLength={"7"}
-        maxLength={"300"}
+        type="url"
+        placeholder="Ссылка на картинку"
+        name="popup-input-url"
+        minLength="7"
+        maxLength="300"
         value={inputLink}
         onChange={handleChangeLink}
         required
       />
-      <span id={"popup-input-url-error"} className={"popup__error"}>{errorLink}</span>
+      <span id="popup-input-url-error" className="popup__error">{errorLink}</span>
     </PopupWithForm>
   );
 }

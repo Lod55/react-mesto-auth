@@ -29,30 +29,31 @@ const EditAvatarPopup = (props) => {
 
   return (
     <PopupWithForm
-      name={"popup-add-avatar"}
-      title={"Обновить аватар"}
-      textButton={"Обновить"}
+      name="popup-add-avatar"
+      title="Обновить аватар"
+      textButton="Обновить"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      validForm={false}
     >
       <input
         className={`popup__input popup__input_type_photo 
         ${!inputValid
-            ? 'popup__input_state_invalid'
-            : ''
+            ? ('popup__input_state_invalid')
+            : ('')
           }`}
-        type={"url"}
-        placeholder={"Ссылка на аватар"}
-        name={"popup-input-url-avatar"}
+        type="url"
+        placeholder="Ссылка на аватар"
+        name="popup-input-url-avatar"
         onChange={handleChangeAvatar}
-        minLength={"7"}
-        maxLength={"300"}
+        minLength="7"
+        maxLength="300"
         value={inputValue}
         required
       />
 
-      <span id={"popup-input-url-avatar-error"} className={"popup__error"}>{error}</span>
+      <span id="popup-input-url-avatar-error" className="popup__error">{error}</span>
     </PopupWithForm>
   );
 }

@@ -46,12 +46,13 @@ const EditProfilePopup = (props) => {
 
   return (
     <PopupWithForm
-      name={"popup-profile"}
-      title={"Редактировать профиль"}
-      textButton={"Сохранить"}
+      name="popup-profile"
+      title="Редактировать профиль"
+      textButton="Сохранить"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      validForm={false}
     >
       <input
         className={`popup__input popup__input_type_author 
@@ -59,32 +60,32 @@ const EditProfilePopup = (props) => {
             ? 'popup__input_state_invalid'
             : ''
           }`}
-        type={"text"}
-        placeholder={"Ваше имя"}
-        name={"popup-input-name"}
-        minLength={"2"}
-        maxLength={"40"}
+        type="text"
+        placeholder="Ваше имя"
+        name="popup-input-name"
+        minLength="2"
+        maxLength="40"
         value={inputName}
         onChange={handleChangeName}
         required
       />
-      <span id={"popup-input-name-error"} className={"popup__error"}>{errorName}</span>
+      <span id="popup-input-name-error" className="popup__error">{errorName}</span>
       <input
         className={`popup__input popup__input_type_status 
         ${!inputAboutValid
             ? 'popup__input_state_invalid'
             : ''
           }`}
-        type={"text"}
-        placeholder={"Расскажите о себе"}
-        name={"popup-input-status"}
-        minLength={"2"}
-        maxLength={"200"}
+        type="text"
+        placeholder="Расскажите о себе"
+        name="popup-input-status"
+        minLength="2"
+        maxLength="200"
         value={inputAbout}
         onChange={handleChangeAbout}
         required
       />
-      <span id={"popup-input-status-error"} className={"popup__error"}>{errorAbout}</span>
+      <span id="popup-input-status-error" className="popup__error">{errorAbout}</span>
     </PopupWithForm>
   );
 }

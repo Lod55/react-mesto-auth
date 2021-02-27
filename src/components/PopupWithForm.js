@@ -8,10 +8,11 @@ const PopupWithForm = (props) => {
     textButton,
     isOpen,
     onClose,
-    onSubmit
+    onSubmit,
+    validForm
   } = props;
 
-  const [isFormValid, setIsFormValid] = useState(false)
+  const [isFormValid, setIsFormValid] = useState(validForm)
 
   const className = {
     section: `popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`,
@@ -24,25 +25,24 @@ const PopupWithForm = (props) => {
 
   return (
     <section className={className.section}>
-      <div className={"popup__container"}>
+      <div className="popup__container">
         <button
-          className={"button popup__button-close"}
-          type={"button"}
+          className="button popup__button-close"
+          type="button"
           onClick={onClose}>
         </button>
-        <h2 className={"popup__title"}>
-          {title}</h2>
+        <h2 className="popup__title">{title}</h2>
         <form
-          className={"popup__form"}
+          className="popup__form"
           name={name}
-          id={"popup-form-edit"}
+          id="popup-form-edit"
           onSubmit={onSubmit}
           onChange={handleChangeForm}
         >
           {children}
           <button
             className={className.button}
-            type={"submit"}>
+            type="submit">
             {textButton}
           </button>
         </form>

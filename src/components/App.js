@@ -11,23 +11,23 @@ import Footer from './Footer';
 const App = () => {
 
   return (
-    <div className={"page__container"}>
+    <div className="page__container">
       <Header />
 
       <Switch>
-        <Route path={'/'} exact>
+        <Route path='/' exact>
           <Main />
         </Route>
 
-        <Route path={'/sign-up'} exact>
+        <Route path='/sign-up' exact>
           <Register />
         </Route>
 
-        <Route path={'/sign-in'} exact>
+        <Route path='/sign-in' exact>
           <Login />
         </Route>
 
-        <Route path={'*'}>
+        <Route path='*'>
           <NotFound />
         </Route>
 

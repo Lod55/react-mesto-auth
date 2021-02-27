@@ -125,31 +125,31 @@ const Main = () => {
   return (
     <CurrentUserContext.Provider value={currentUser}>
 
-      <main className={"content page__content"}>
-        <section className={"profile content__item"}>
-          <div className={"profile__overlay"} onClick={handleEditAvatarClick}>
-            <img src={currentUser.avatar} alt={`Аватар ${currentUser.name}`} className={"profile__avatar"} />
+      <main className="content page__content">
+        <section className="profile content__item">
+          <div className="profile__overlay" onClick={handleEditAvatarClick}>
+            <img src={currentUser.avatar} alt={`Аватар ${currentUser.name}`} className="profile__avatar" />
           </div>
-          <div className={"profile__text-block"}>
-            <div className={"profile__row-block"}>
-              <h1 className={"profile__author"}>{currentUser.name}</h1>
-              <button className={"button profile__button-edit"} type={"button"} onClick={handleEditProfileClick}></button>
+          <div className="profile__text-block">
+            <div className="profile__row-block">
+              <h1 className="profile__author">{currentUser.name}</h1>
+              <button className="button profile__button-edit" type="button" onClick={handleEditProfileClick}></button>
             </div>
-            <p className={"profile__status"}>{currentUser.about}</p>
+            <p className="profile__status">{currentUser.about}</p>
           </div>
-          <button className={"button profile__button-add"} type={"button"} onClick={handleAddPlaceClick}></button>
+          <button className="button profile__button-add" type="button" onClick={handleAddPlaceClick}></button>
         </section>
         {isLoading
-          ? <p>Loading...</p>
-          : (<section className={"places content__item"}>
+          ? (<p>Loading...</p>)
+          : (<section className="places content__item">
             {cards.map(item => (
-              <Card
+              (<Card
                 key={item._id}
                 card={item}
                 handleClick={handleCardClick}
                 onCardLike={handleCardLike}
                 onCardTrash={handleTrashClick}
-              />
+              />)
             )
             )}
           </section>)
