@@ -1,7 +1,11 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function RemovePlacePopup({ onDeleteCard, isOpen, onClose }) {
+const RemovePlacePopup = ({
+  onDeleteCard,
+  isOpen,
+  onClose
+}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onDeleteCard();

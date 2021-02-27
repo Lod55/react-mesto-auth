@@ -1,7 +1,13 @@
 import React from 'react';
 
-function ImagePopup({ card, onClose }) {
-  const className = `popup popup_blackout ${card.isOpen ? 'popup_opened' : ''}`;
+const ImagePopup = ({
+  card,
+  onClose
+}) => {
+  const className = `popup popup_blackout ${card.isOpen
+    ? 'popup_opened'
+    : ''
+    }`;
 
   return (
     <section className={className} id="popup-image">

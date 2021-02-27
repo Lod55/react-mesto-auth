@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../images/Logo.svg';
 
-function Header() {
+const Header = () => {
   return (
     <header className={"header page__header"}>
       <img src={logo} alt={"Логотип проекта Места России"} className={"header__logo"} />

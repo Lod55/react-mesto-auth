@@ -15,4 +15,4 @@
 https://lod55.github.io/
 
 ## В работе использовались:
-- [] 
+- [X] библиотека React Router

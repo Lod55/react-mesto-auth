@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function EditAvatarPopup({ onUpdateAvatar, isOpen, onClose }) {
+const EditAvatarPopup = ({
+  onUpdateAvatar,
+  isOpen,
+  onClose
+}) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleChangeAvatar = (e) => setInputValue(e.target.value);
