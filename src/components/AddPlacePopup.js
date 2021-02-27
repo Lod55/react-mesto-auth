@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-const AddPlacePopup = ({
-  onAddPlace,
-  isOpen,
-  onClose
-}) => {
+const AddPlacePopup = (props) => {
+  let {
+    onAddPlace,
+    isOpen,
+    onClose
+  } = props;
+
   const [inputName, setInputName] = useState('');
   const [inputLink, setInputLink] = useState('');
 

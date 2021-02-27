@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 
-const PopupWithForm = ({
-  children,
-  name,
-  title,
-  textButton,
-  isOpen,
-  onClose,
-  onSubmit
-}) => {
+const PopupWithForm = (props) => {
+  let {
+    children,
+    name,
+    title,
+    textButton,
+    isOpen,
+    onClose,
+    onSubmit
+  } = props;
+
   const [isFormValid, setIsFormValid] = useState(false)
 
   const className = {

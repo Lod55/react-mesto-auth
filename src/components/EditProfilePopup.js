@@ -2,11 +2,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 
-const EditProfilePopup = ({
-  onUpdateUser,
-  isOpen,
-  onClose
-}) => {
+const EditProfilePopup = (props) => {
+  let {
+    onUpdateUser,
+    isOpen,
+    onClose
+  } = props;
+
   const currentUser = useContext(CurrentUserContext);
 
   const [inputName, setInputName] = useState(currentUser.name);

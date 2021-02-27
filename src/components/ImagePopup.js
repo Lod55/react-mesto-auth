@@ -1,9 +1,11 @@
 import React from 'react';
 
-const ImagePopup = ({
-  card,
-  onClose
-}) => {
+const ImagePopup = (props) => {
+  let {
+    card,
+    onClose
+  } = props;
+
   const className = `popup popup_blackout ${card.isOpen
     ? 'popup_opened'
     : ''

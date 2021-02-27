@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-const EditAvatarPopup = ({
-  onUpdateAvatar,
-  isOpen,
-  onClose
-}) => {
+const EditAvatarPopup = (props) => {
+  let {
+    onUpdateAvatar,
+    isOpen,
+    onClose
+  } = props;
+
   const [inputValue, setInputValue] = useState('');
 
   const [inputValid, setInputValid] = useState(true);
