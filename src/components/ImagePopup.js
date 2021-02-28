@@ -17,8 +17,8 @@ const ImagePopup = (props) => {
         <button
           className="button popup__button-close"
           type="button"
-          onClick={onClose}>
-        </button>
+          onClick={onClose}
+        />
         <img
           className="popup__image"
           alt={card.name}

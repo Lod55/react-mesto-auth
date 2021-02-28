@@ -1,6 +1,17 @@
 .header {
   border-bottom: 1px solid rgb(84, 84, 84, .7);
   padding-bottom: 37px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 @media screen and (max-width: 373px) {
