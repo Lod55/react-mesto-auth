@@ -27,7 +27,7 @@
 
   .header__list {
     flex-direction: column;
-    justify-content: center;
+    margin: 40px 0;
     height: 100%;
     width: 100%;
   }

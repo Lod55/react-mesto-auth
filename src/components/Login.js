@@ -2,7 +2,7 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <p>Авторизация</p>
+    <p className='content'>Авторизация</p>
   );
 }
 

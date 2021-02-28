@@ -1,0 +1,7 @@
+.not-found__title {
+  margin: 0;
+}
+
+.not-found__title span {
+  color: rgba(193, 253, 195, 0.8);
+}
