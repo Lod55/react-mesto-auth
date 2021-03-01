@@ -69,7 +69,7 @@ const Register = ({ onRegister }) => {
     e.preventDefault();
 
     // Проверяем совпадение паролей
-    if (data.password !== data.confirmPassword) {
+    if (data.password !== data.confirmation) {
       setValidations((data) => ({
         ...data,
         password: false,
