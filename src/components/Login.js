@@ -1,72 +1,134 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const initialData = {
     email: '',
     password: '',
   };
 
-  // const [data, setData] = useState(initialData);
-  // const [message, setMessage] = useState('');
-  // const history = useHistory();
+  const initialInputsValid = {
+    email: false,
+    password: false,
+    form: false
+  };
 
-  const [isFormValid, setIsFormValid] = useState(false)
-  const [inputEmailValid, setInputEmailValid] = useState(true);
-  const [inputPasswordValid, setInputPasswordValid] = useState(true);
+  const initialErrorsValid = {
+    email: '',
+    password: '',
+    submit: ''
+  };
 
-  // const [errorName, setErrorName] = useState();
-  // const [errorLink, setErrorLink] = useState();
+  const [data, setData] = useState(initialData);
+  const [validations, setValidations] = useState(initialInputsValid);
+  const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
+  const history = useHistory();
+
+  const handleChange = (e) => {
+    let { name, value, validity, validationMessage } = e.target;
+
+    setData(data => ({
+      ...data,
+      [name]: value,
+    }));
+
+    setValidations(data => ({
+      ...data,
+      [name]: validity.valid,
+    }));
+
+    setErrorsValid(data => ({
+      ...data,
+      [name]: validationMessage,
+    }));
+
+    if (!validations.email || !validations.password) {
+      setValidations(data => ({
+        ...data,
+        form: false,
+      }));
+    } else {
+      setValidations(data => ({
+        ...data,
+        form: true,
+      }));
+    }
+  }
+
+  const resetForm = () => {
+    setData(initialData);
+    setValidations(initialInputsValid);
+    setErrorsValid(initialErrorsValid);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    onLogin(data)
+      .then(resetForm)
+      .then(() => history.push('/'))
+      .catch(err => {
+        setErrorsValid((data) => ({
+          ...data,
+          submit: err.message || 'Что то пошло не так'
+        }));
+      })
+  }
 
   return (
-    <main className="login content">
+    <main className="login content page__content">
       <div className="login__container">
         <h2 className="login__title">Вход</h2>
         <form
           className="login__form"
-          name="form-with-login"
-          id="form-with-login">
-
+          name="form"
+          id="form-with-login"
+          onSubmit={handleSubmit}>
           <input
             className={`login__input login__input_type_email
-        ${!inputEmailValid
+        ${!validations.email
                 ? 'login__input_state_invalid'
                 : ''
               }`}
             type="email"
             placeholder="Email"
-            name="login-input-email"
-            minLength="2"
+            name="email"
+            id="login-input-email"
             maxLength="100"
+            value={data.email}
+            onChange={handleChange}
             required
           />
           <span
             id="login-input-email-error"
             className="login__error">
-
+            {errorsValid.email}
           </span>
 
           <input
             className={`login__input login__input_type_password
-        ${!inputPasswordValid
+        ${!validations.password
                 ? 'login__input_state_invalid'
                 : ''
               }`}
             type="password"
             placeholder="Пароль"
-            name="login-input-password"
-            minLength="6"
+            name="password"
+            id="login-input-password"
             maxLength="50"
+            value={data.password}
+            onChange={handleChange}
             required
           />
           <span
             id="login-input-password-error"
             className="login__error">
+            {errorsValid.password}
           </span>
 
           <button
             className={`button login__button-submit 
-            ${!isFormValid
+            ${!validations.form
                 ? 'login__button-submit_invalid'
                 : ''
               }`}

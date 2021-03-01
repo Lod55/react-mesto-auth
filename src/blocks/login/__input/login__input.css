@@ -5,15 +5,17 @@
   font-size: 14px;
   line-height: 17px;
   color: #FFFFFF;
-  border-bottom: 2px solid #CCCCCC;
+  border-bottom: 2px solid #528f4b;
   box-sizing: border-box;
   outline: none;
   background-color: rgb(0, 0, 0, .9);
   padding: 0px 0 5px 0;
+  margin: 10px 0 0 0;
 }
 
 .login__input:first-of-type {
   padding-top: 0;
+  margin-top: 0;
 }
 
 .login__input::placeholder {

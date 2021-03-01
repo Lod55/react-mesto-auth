@@ -3,13 +3,13 @@
   font-size: 14px;
   line-height: 17px;
   color: #FF0000;
-  margin-top: 5px;
+  margin: 5px 0 0 0;
   box-sizing: border-box;
   min-height: 30px;
 }
 
 .register__error:last-of-type {
-  margin: 5px 0 125px 0;
+  margin: 5px 0 105px 0;
 }
 
 @media screen and (max-width: 373px) {
@@ -18,6 +18,6 @@
   }
 
   .register__error:last-of-type {
-    margin: 5px 0 95px 0;
+    margin: 5px 0 75px 0;
   }
 }

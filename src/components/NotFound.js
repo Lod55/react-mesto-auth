@@ -4,7 +4,7 @@ import Error from '.././images/404.png'
 
 const NotFound = () => {
   return (
-    <main className="not-found content">
+    <main className="not-found content page__content">
       <img className="not-found__image" src={Error} alt="Error 404" />
       <h2 className="not-found__title">
         <span>404</span> - Страница не найдена

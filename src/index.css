@@ -19,6 +19,8 @@
 @import url('./blocks/header/__list/header__list.css');
 @import url('./blocks/header/__email/header__email.css');
 @import url('./blocks/header/__button/header__button.css');
+@import url('./blocks/header/__button/_type/header__button_type_exit.css');
+
 /* Button */
 @import url('./blocks/button/button.css');
 /* Profile */
@@ -78,6 +80,7 @@
 @import url('./blocks/register/__input/_state/register__input_state_invalid.css');
 @import url('./blocks/register/__error/register__error.css');
 @import url('./blocks/register/__button-submit/register__button-submit.css');
+@import url('./blocks/register/__button-submit/_invalid/register__button-submit_invalid.css');
 @import url('./blocks/register/__signin/register__signin.css');
 @import url('./blocks/register/__login-link/register__login-link.css');
 /* Login */
@@ -89,5 +92,6 @@
 @import url('./blocks/login/__input/_state/login__input_state_invalid.css');
 @import url('./blocks/login/__error/login__error.css');
 @import url('./blocks/login/__button-submit/login__button-submit.css');
+@import url('./blocks/login/__button-submit/_invalid/login__button-submit_invalid.css');
 
 

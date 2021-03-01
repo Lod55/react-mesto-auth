@@ -8,36 +8,73 @@ const AddPlacePopup = (props) => {
     onClose
   } = props;
 
-  const [inputName, setInputName] = useState('');
-  const [inputLink, setInputLink] = useState('');
-
-  const [inputNameValid, setInputNameValid] = useState(true);
-  const [inputLinkValid, setInputLinkValid] = useState(true);
-  const [errorName, setErrorName] = useState();
-  const [errorLink, setErrorLink] = useState();
-
-  const handleChangeName = (e) => {
-    setInputName(e.target.value)
-    setErrorName(e.target.validationMessage)
-    setInputNameValid(e.target.validity.valid)
+  const initialData = {
+    name: '',
+    link: ''
   };
 
-  const handleChangeLink = (e) => {
-    setInputLink(e.target.value)
-    setErrorLink(e.target.validationMessage)
-    setInputLinkValid(e.target.validity.valid)
-  };
+  const initialInputsValid = {
+    name: false,
+    link: false,
+  }
+
+  const initialErrorsValid = {
+    name: '',
+    link: '',
+    submit: ''
+  }
+
+  const [data, setData] = useState(initialData);
+  const [validations, setValidations] = useState(initialInputsValid);
+  const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
+
+  const handleChange = (e) => {
+    let { name, value, validity, validationMessage } = e.target;
+
+    setData(data => ({
+      ...data,
+      [name]: value,
+    }));
+
+    setValidations(data => ({
+      ...data,
+      [name]: validity.valid,
+    }));
+
+    setErrorsValid(data => ({
+      ...data,
+      [name]: validationMessage,
+    }));
+  }
+
+  const checkFalid = () => {
+    if (!validations.name || !validations.link) {
+      setValidations(data => ({
+        ...data,
+        form: false,
+      }));
+    } else {
+      setValidations(data => ({
+        ...data,
+        form: true,
+      }));
+    }
+  }
+
+  const resetForm = () => {
+    setData(initialData);
+    setValidations(initialInputsValid);
+    setErrorsValid(initialErrorsValid);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onAddPlace({
-      name: inputName,
-      link: inputLink
-    });
-
-    setInputName('');
-    setInputLink('');
+      name: data.name,
+      link: data.link
+    })
+    resetForm()
   }
 
   return (
@@ -48,40 +85,42 @@ const AddPlacePopup = (props) => {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      validForm={false}
+      validForm={validations.form}
     >
       <input
         className={`popup__input popup__input_type_place-name 
-        ${!inputNameValid
+        ${!validations.name
             ? ('popup__input_state_invalid')
             : ('')
           }`}
         type="text"
         placeholder="Название"
-        name="popup-input-place-name"
+        name="name"
+        id="popup-input-place-name"
         minLength="2"
         maxLength="30"
-        value={inputName}
-        onChange={handleChangeName}
+        value={data.name}
+        onChange={handleChange}
         required
       />
-      <span id="popup-input-place-name-error" className="popup__error">{errorName}</span>
+      <span id="popup-input-place-name-error" className="popup__error">{errorsValid.name}</span>
       <input
         className={`popup__input popup__input_type_photo 
-        ${!inputLinkValid
+        ${!validations.link
             ? ('popup__input_state_invalid')
             : ('')
           }`}
         type="url"
         placeholder="Ссылка на картинку"
-        name="popup-input-url"
+        id="popup-input-url"
+        name="link"
         minLength="7"
         maxLength="300"
-        value={inputLink}
-        onChange={handleChangeLink}
+        value={data.link}
+        onChange={handleChange}
         required
       />
-      <span id="popup-input-url-error" className="popup__error">{errorLink}</span>
+      <span id="popup-input-url-error" className="popup__error">{errorsValid.link}</span>
     </PopupWithForm>
   );
 }

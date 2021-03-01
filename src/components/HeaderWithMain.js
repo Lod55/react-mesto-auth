@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 
 const HeaderWithMain = () => {
@@ -24,11 +25,7 @@ const HeaderWithMain = () => {
             <p className="header__email">Email@email.ru</p>
           </li>
           <li>
-            <button
-              className="header__button button"
-              type="button"
-            > Выйти
-            </button>
+            <Link className="button header__button header__button_type_exit" to="/sign-in">Выйти</Link>
           </li>
         </ul>
       </nav>

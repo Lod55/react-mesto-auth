@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api.js'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
+import api from '../utils/api.js'
 import Card from './Card.js';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
@@ -60,7 +59,7 @@ const Main = () => {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch(err => console.log(`Error: ${err}`));
+      .catch(err => console.log(`Error: ${err}`))
   }
 
   const handleUpdateAvatar = ({ avatar }) => {
@@ -69,7 +68,7 @@ const Main = () => {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch(err => console.log(`Error: ${err}`));
+      .catch(err => console.log(`Error: ${err}`))
   }
 
   const handleAddPlaceSubmit = ({ name, link }) => {
@@ -78,7 +77,7 @@ const Main = () => {
         setCards([res, ...cards]);
         closeAllPopups();
       })
-      .catch(err => console.log(`Error: ${err}`));
+      .catch(err => console.log(`Error: ${err}`))
   }
 
   // функция контоля состояния лайка и работа с состоянием на сервере
@@ -90,7 +89,7 @@ const Main = () => {
         const newCards = cards.map(item => item._id === card._id ? res : item);
         setCards(newCards);
       })
-      .catch(err => console.log(`Error: ${err}`));
+      .catch(err => console.log(`Error: ${err}`))
   }
 
   // функция удаления карточки с сервера
@@ -101,7 +100,7 @@ const Main = () => {
         setCards(newCards);
         closeAllPopups();
       })
-      .catch(err => console.log(`Error: ${err}`));
+      .catch(err => console.log(`Error: ${err}`))
   }
 
   useEffect(() => {
@@ -109,7 +108,7 @@ const Main = () => {
       .then(res => {
         setCurrentUser(res);
       })
-      .catch(err => console.log(`Error: ${err}`));
+      .catch(err => console.log(`Error: ${err}`))
   }, []);
 
   useEffect(() => {
@@ -119,7 +118,7 @@ const Main = () => {
         setCards(res)
       })
       .catch(err => console.log(`Error: ${err}`))
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (

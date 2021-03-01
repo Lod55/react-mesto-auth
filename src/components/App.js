@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 import Register from './Register';
 import Login from './Login';
@@ -9,8 +9,19 @@ import HeaderWithRegister from './HeaderWithRegister';
 import HeaderWithLogin from './HeaderWithLogin'
 import Main from './Main';
 import Footer from './Footer';
+import * as auth from '../utils/auth';
+import api from '../utils/api.js'
 
 const App = () => {
+  const initialData = {
+    email: ''
+  }
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [data, setData] = useState(initialData);
+  const history = useHistory();
+
+
 
   return (
     <div className="page__container">

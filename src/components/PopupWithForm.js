@@ -19,7 +19,7 @@ const PopupWithForm = (props) => {
     button: `button popup__button-submit ${!isFormValid ? 'popup__button-submit_invalid' : ''}`
   };
 
-  const handleChangeForm = (e) => {
+  const handleChange = (e) => {
     setIsFormValid(e.target.validity.valid)
   }
 
@@ -37,7 +37,7 @@ const PopupWithForm = (props) => {
           name={name}
           id="popup-form-edit"
           onSubmit={onSubmit}
-          onChange={handleChangeForm}
+          onChange={handleChange}
         >
           {children}
           <button

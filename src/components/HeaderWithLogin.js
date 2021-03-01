@@ -1,14 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 
 const HeaderWithLogin = () => {
   return (
     <Header>
-      <button
-        className="header__button button"
-        type="button">
-        Регистрация
-      </button>
+      <Link className="button header__button header__button_type_register" to="/sign-up">Регистрация</Link>
     </Header>
   );
 }
