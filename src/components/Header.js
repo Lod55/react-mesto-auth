@@ -1,8 +1,7 @@
 import React from 'react';
 import logo from '../images/Logo.svg';
 
-const Header = (props) => {
-  let { children } = props;
+const Header = ({ children }) => {
 
   return (
     <header className="header page__header">

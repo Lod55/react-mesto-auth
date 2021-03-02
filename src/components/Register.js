@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 const Register = ({ onRegister }) => {
+  // Дефолтное значение инпутов
   const initialData = {
     email: '',
     password: '',
     confirmation: ''
   };
 
+  // Дефолтное значение валидации
   const initialInputsValid = {
     email: false,
     password: false,
@@ -15,6 +17,7 @@ const Register = ({ onRegister }) => {
     form: false
   }
 
+  // Дефолтное значение ошибок валидации и сабмита
   const initialErrorsValid = {
     email: '',
     password: '',
@@ -22,13 +25,37 @@ const Register = ({ onRegister }) => {
     submit: ''
   }
 
+  // Стейты компонента
   const [data, setData] = useState(initialData);
   const [validations, setValidations] = useState(initialInputsValid);
   const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
+
   const history = useHistory();
+
+  // Функции компонента
+  // --Проверка валидности формы 
+  // --Проверка валидности инпуты
+  // --Ресет формы 
+  // --Закрытие формы
+  // --Сабмит формы 
+  const checkFormValid = () => {
+    if (!validations.email || !validations.password || !validations.confirmation) {
+      return setValidations(data => ({
+        ...data,
+        form: false,
+      }));
+    } else {
+      return setValidations(data => ({
+        ...data,
+        form: true,
+      }));
+    }
+  }
 
   const handleChange = (e) => {
     let { name, value, validity, validationMessage } = e.target;
+
+    checkFormValid()
 
     setData(data => ({
       ...data,
@@ -44,19 +71,6 @@ const Register = ({ onRegister }) => {
       ...data,
       [name]: validationMessage,
     }));
-
-    // Проверяем валидность инпутов для кнопки
-    if (!validations.email || !validations.password || !validations.confirmation) {
-      setValidations(data => ({
-        ...data,
-        form: false,
-      }));
-    } else {
-      setValidations(data => ({
-        ...data,
-        form: true,
-      }));
-    }
   }
 
   const resetForm = () => {
@@ -88,6 +102,7 @@ const Register = ({ onRegister }) => {
       return;
     }
 
+    // Запрос на сервер и обработка результата
     onRegister(data)
       .then(resetForm)
       .then(() => history.push('/sign-in'))
@@ -119,6 +134,7 @@ const Register = ({ onRegister }) => {
             placeholder="Email"
             name="email"
             id="register-input-email"
+            minLength="2"
             maxLength="100"
             value={data.email}
             onChange={handleChange}
@@ -162,6 +178,7 @@ const Register = ({ onRegister }) => {
             placeholder="Подтвердите пароль"
             name="confirmation"
             id="register-input-confirm-password"
+            minLength="2"
             maxLength="50"
             value={data.confirmation}
             onChange={handleChange}

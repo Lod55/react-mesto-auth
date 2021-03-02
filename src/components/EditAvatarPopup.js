@@ -2,58 +2,140 @@ import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 const EditAvatarPopup = (props) => {
+  // Диструктуризированная переменная с пропсами
   let {
     onUpdateAvatar,
     isOpen,
     onClose
   } = props;
 
-  const [inputValue, setInputValue] = useState('');
-
-  const [inputValid, setInputValid] = useState(true);
-  const [error, setError] = useState();
-
-
-  const handleChangeAvatar = (e) => {
-    setInputValue(e.target.value);
-    setError(e.target.validationMessage);
-    setInputValid(e.target.validity.valid);
+  // Дефолтное значение инпутов
+  const initialData = {
+    avatar: ''
   };
 
+  // Дефолтное значение валидации
+  const initialInputsValid = {
+    avatar: false,
+    form: false
+  }
+
+  // Дефолтное значение ошибок валидации и сабмита
+  const initialErrorsValid = {
+    avatar: '',
+    submit: ''
+  }
+
+  // Стейты компонента
+  const [data, setData] = useState(initialData);
+  const [validations, setValidations] = useState(initialInputsValid);
+  const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
+
+  // Функции компонента
+  // --Проверка валидности формы 
+  // --Проверка валидности инпуты
+  // --Ресет формы 
+  // --Закрытие формы
+  // --Сабмит формы 
+  const checkFormValid = () => {
+    if (!validations.avatar) {
+      return setValidations((data) => ({
+        ...data,
+        form: false
+      }))
+    } else {
+      return setValidations((data) => ({
+        ...data,
+        form: true
+      }))
+    }
+  }
+
+  const handleChange = (e) => {
+    let { name, value, validity, validationMessage } = e.target;
+
+    checkFormValid();
+
+    setData(data => ({
+      ...data,
+      [name]: value,
+    }));
+
+    setValidations(data => ({
+      ...data,
+      [name]: validity.valid,
+    }));
+
+    setErrorsValid(data => ({
+      ...data,
+      [name]: validationMessage,
+    }));
+  }
+
+  const resetForm = () => {
+    setData(initialData);
+    setValidations(initialInputsValid);
+    setErrorsValid(initialErrorsValid);
+  }
+
+  const handleClose = () => {
+    onClose()
+    resetForm()
+  }
+
+  //доделать в app
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onUpdateAvatar({ avatar: inputValue });
-    setInputValue('');
+    onUpdateAvatar({ avatar: data.avatar });
+    resetForm();
   }
 
   return (
     <PopupWithForm
       name="popup-add-avatar"
       title="Обновить аватар"
-      textButton="Обновить"
       isOpen={isOpen}
-      onClose={onClose}
-      onSubmit={handleSubmit}
-      validForm={false}
+      onClose={handleClose}
     >
-      <input
-        className={`popup__input popup__input_type_photo 
-        ${!inputValid
-            ? ('popup__input_state_invalid')
-            : ('')
-          }`}
-        type="url"
-        placeholder="Ссылка на аватар"
-        name="popup-input-url-avatar"
-        onChange={handleChangeAvatar}
-        minLength="7"
-        maxLength="300"
-        value={inputValue}
-        required
-      />
+      <form
+        className="popup__form"
+        name="popup-add-avatar"
+        id="popup-add-avatar"
+        onSubmit={handleSubmit}
+      >
+        <input
+          className={`popup__input popup__input_type_photo 
+        ${!validations.avatar
+              ? ('popup__input_state_invalid')
+              : ('')
+            }`}
+          type="url"
+          placeholder="Ссылка на аватар"
+          name='avatar'
+          id="popup-input-url-avatar"
+          onChange={handleChange}
+          minLength="7"
+          maxLength="300"
+          value={data.avatar}
+          required
+        />
+        <span
+          id="popup-input-url-avatar-error"
+          className="popup__error">
+          {errorsValid.avatar}
+        </span>
 
-      <span id="popup-input-url-avatar-error" className="popup__error">{error}</span>
+        <button
+          className={`button popup__button-submit 
+          ${!validations.form
+              ? 'popup__button-submit_invalid'
+              : ''
+            }`}
+          type="submit">
+          Обновить
+        </button>
+      </form>
     </PopupWithForm>
   );
 }

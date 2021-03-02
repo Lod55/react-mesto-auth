@@ -2,30 +2,56 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
+  // Дефолтное значение инпутов
   const initialData = {
     email: '',
     password: '',
   };
 
+  // Дефолтное значение валидации
   const initialInputsValid = {
     email: false,
     password: false,
     form: false
   };
 
+  // Дефолтное значение ошибок валидации и сабмита
   const initialErrorsValid = {
     email: '',
     password: '',
     submit: ''
   };
 
+  // Стейты компонента
   const [data, setData] = useState(initialData);
   const [validations, setValidations] = useState(initialInputsValid);
   const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
   const history = useHistory();
 
+  // Функции компонента
+  // --Проверка валидности формы 
+  // --Проверка валидности инпуты
+  // --Ресет формы 
+  // --Закрытие формы
+  // --Сабмит формы 
+  const checkFormValid = () => {
+    if (!validations.email || !validations.password) {
+      setValidations(data => ({
+        ...data,
+        form: false,
+      }));
+    } else {
+      setValidations(data => ({
+        ...data,
+        form: true,
+      }));
+    }
+  }
+
   const handleChange = (e) => {
     let { name, value, validity, validationMessage } = e.target;
+
+    checkFormValid();
 
     setData(data => ({
       ...data,
@@ -41,18 +67,6 @@ const Login = ({ onLogin }) => {
       ...data,
       [name]: validationMessage,
     }));
-
-    if (!validations.email || !validations.password) {
-      setValidations(data => ({
-        ...data,
-        form: false,
-      }));
-    } else {
-      setValidations(data => ({
-        ...data,
-        form: true,
-      }));
-    }
   }
 
   const resetForm = () => {

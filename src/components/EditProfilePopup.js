@@ -3,89 +3,179 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 
 const EditProfilePopup = (props) => {
+  // Диструктуризированная переменная с пропсами
   let {
     onUpdateUser,
     isOpen,
     onClose
   } = props;
 
+  // Контекст с данными о пользователе
   const currentUser = useContext(CurrentUserContext);
 
-  const [inputName, setInputName] = useState(currentUser.name);
-  const [inputAbout, setInputAbout] = useState(currentUser.about);
-  const [inputNameValid, setInputNameValid] = useState(true);
-  const [inputAboutValid, setInputAboutValid] = useState(true);
-  const [errorName, setErrorName] = useState();
-  const [errorAbout, setErrorAbout] = useState();
-
-  const handleChangeName = (e) => {
-    setInputName(e.target.value)
-    setErrorName(e.target.validationMessage)
-    setInputNameValid(e.target.validity.valid)
+  // Дефолтное значение инпутов
+  const initialData = {
+    author: currentUser.name || '',
+    about: currentUser.about || ''
   };
 
-  const handleChangeAbout = (e) => {
-    setInputAbout(e.target.value)
-    setErrorAbout(e.target.validationMessage)
-    setInputAboutValid(e.target.validity.valid)
-  };
+  // Дефолтное значение валидации
+  const initialInputsValid = {
+    author: false,
+    about: false,
+    form: true
+  }
 
+  // Дефолтное значение ошибок валидации и сабмита
+  const initialErrorsValid = {
+    author: '',
+    about: '',
+    submit: ''
+  }
+
+  // Стейты компонента
+  const [data, setData] = useState(initialData);
+  const [validations, setValidations] = useState(initialInputsValid);
+  const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
+
+  // Функции компонента
+  // --Проверка валидности формы 
+  // --Проверка валидности инпуты
+  // --Ресет формы 
+  // --Закрытие формы
+  // --Сабмит формы
+  // --Хук Юз Эффект для отображения актуальных данных о пользователе
+  const checkFormValid = () => {
+    if (!validations.author || !validations.about) {
+      return setValidations((data) => ({
+        ...data,
+        form: false
+      }))
+    } else {
+      return setValidations((data) => ({
+        ...data,
+        form: true
+      }))
+    }
+  }
+
+  const handleChange = (e) => {
+    let { name, value, validity, validationMessage } = e.target;
+
+    checkFormValid();
+
+    setData(data => ({
+      ...data,
+      [name]: value,
+    }));
+
+    setValidations(data => ({
+      ...data,
+      [name]: validity.valid,
+    }));
+
+    setErrorsValid(data => ({
+      ...data,
+      [name]: validationMessage,
+    }));
+  }
+
+  const resetForm = () => {
+    setData(initialData);
+    setValidations(initialInputsValid);
+    setErrorsValid(initialErrorsValid);
+  }
+
+  const handleClose = () => {
+    onClose()
+    resetForm()
+  }
+
+  //доделать в app
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onUpdateUser({
-      name: inputName,
-      about: inputAbout
+      name: data.author,
+      about: data.about
     });
+    resetForm()
   }
 
   useEffect(() => {
-    setInputName(currentUser.name);
-    setInputAbout(currentUser.about);
+    setData(data => ({
+      author: currentUser.name || '',
+      about: currentUser.about || ''
+    }));
   }, [currentUser]);
 
   return (
     <PopupWithForm
       name="popup-profile"
       title="Редактировать профиль"
-      textButton="Сохранить"
       isOpen={isOpen}
-      onClose={onClose}
-      onSubmit={handleSubmit}
-      validForm={false}
+      onClose={handleClose}
     >
-      <input
-        className={`popup__input popup__input_type_author 
-        ${!inputNameValid
-            ? 'popup__input_state_invalid'
-            : ''
-          }`}
-        type="text"
-        placeholder="Ваше имя"
-        name="popup-input-name"
-        minLength="2"
-        maxLength="40"
-        value={inputName}
-        onChange={handleChangeName}
-        required
-      />
-      <span id="popup-input-name-error" className="popup__error">{errorName}</span>
-      <input
-        className={`popup__input popup__input_type_status 
-        ${!inputAboutValid
-            ? 'popup__input_state_invalid'
-            : ''
-          }`}
-        type="text"
-        placeholder="Расскажите о себе"
-        name="popup-input-status"
-        minLength="2"
-        maxLength="200"
-        value={inputAbout}
-        onChange={handleChangeAbout}
-        required
-      />
-      <span id="popup-input-status-error" className="popup__error">{errorAbout}</span>
+      <form
+        className="popup__form"
+        name="popup-edit-profile"
+        id="popup-edit-profile"
+        onSubmit={handleSubmit}
+      >
+        <input
+          className={`popup__input popup__input_type_author 
+        ${!validations.author
+              ? 'popup__input_state_invalid'
+              : ''
+            }`}
+          type="text"
+          placeholder="Ваше имя"
+          id="popup-input-name"
+          name='author'
+          minLength="2"
+          maxLength="40"
+          value={data.author}
+          onChange={handleChange}
+          required
+        />
+        <span
+          id="popup-input-name-error"
+          className="popup__error">
+          {errorsValid.author}
+        </span>
+
+        <input
+          className={`popup__input popup__input_type_status 
+        ${!validations.about
+              ? 'popup__input_state_invalid'
+              : ''
+            }`}
+          type="text"
+          placeholder="Расскажите о себе"
+          id="popup-input-status"
+          name='about'
+          minLength="2"
+          maxLength="200"
+          value={data.about}
+          onChange={handleChange}
+          required
+        />
+        <span
+          id="popup-input-status-error"
+          className="popup__error">
+          {errorsValid.about}
+        </span>
+
+        <button
+          className={`button popup__button-submit 
+          ${!validations.form
+              ? 'popup__button-submit_invalid'
+              : ''
+            }`}
+          type="submit">
+          Сохранить
+        </button>
+      </form>
     </PopupWithForm>
   );
 }

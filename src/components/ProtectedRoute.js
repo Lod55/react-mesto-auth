@@ -4,6 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 
 
 const ProtectedRoute = (props) => {
+  // Дефолтное значение инпутов
   let {
     component: Component,
     ...props
@@ -12,7 +13,9 @@ const ProtectedRoute = (props) => {
   return (
     <Route>
       {
-        () => props.loggedIn === true ? <Component {...props} /> : <Redirect to="./sign-in" />
+        () => props.loggedIn === true
+          ? <Component {...props} />
+          : <Redirect to="./sign-in" />
       }
     </Route>
   )
