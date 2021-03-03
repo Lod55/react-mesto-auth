@@ -86,14 +86,11 @@ const AddPlacePopup = (props) => {
     resetForm()
   }
 
-  //доделать в app
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onAddPlace({
-      name: data.name,
-      link: data.link
-    })
+    onAddPlace(data)
     resetForm()
   }
 

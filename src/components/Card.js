@@ -7,7 +7,7 @@ const Card = (props) => {
   let {
     card,
     onCardLike,
-    handleClick,
+    onImageClick,
     onCardTrash
   } = props;
 
@@ -26,7 +26,7 @@ const Card = (props) => {
   // -- Нажатие на фото
   // -- Нажатие на урну
   const handleLikeClick = () => onCardLike(card);
-  const handleImageClick = () => handleClick(card);
+  const handleImageClick = () => onImageClick(card);
   function handleDeleteClick() { onCardTrash(card) }
 
   return (

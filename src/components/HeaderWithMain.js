@@ -4,7 +4,7 @@ import Header from './Header';
 const HeaderWithMain = (props) => {
   let {
     onSignOut,
-    userData
+    userEmail
   } = props;
 
   // Стейт бургер-меню 
@@ -33,7 +33,7 @@ const HeaderWithMain = (props) => {
             : ""}`}>
         <ul className="header__list">
           <li>
-            <p className="header__email">{userData}</p>
+            <p className="header__email">{userEmail}</p>
           </li>
           <li>
             <button

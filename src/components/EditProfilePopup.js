@@ -98,14 +98,10 @@ const EditProfilePopup = (props) => {
     resetForm()
   }
 
-  //доделать в app
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onUpdateUser({
-      name: data.author,
-      about: data.about
-    });
+    onUpdateUser(data)
     resetForm()
   }
 

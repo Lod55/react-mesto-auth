@@ -23,7 +23,7 @@ class Api {
       .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
   }
 
-  setInfoUser({ name, about }) {
+  setInfoUser({ author, about }) {
     return fetch(`${this._address}/${this._groupId}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -31,7 +31,7 @@ class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name,
+        name: author,
         about,
       })
     })

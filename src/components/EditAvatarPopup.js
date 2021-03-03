@@ -83,11 +83,10 @@ const EditAvatarPopup = (props) => {
     resetForm()
   }
 
-  //доделать в app
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onUpdateAvatar({ avatar: data.avatar });
+    onUpdateAvatar(data)
     resetForm();
   }
 
