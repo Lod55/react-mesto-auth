@@ -20,7 +20,6 @@
 @import url('./blocks/header/__email/header__email.css');
 @import url('./blocks/header/__button/header__button.css');
 @import url('./blocks/header/__button/_type/header__button_type_exit.css');
-
 /* Button */
 @import url('./blocks/button/button.css');
 /* Profile */
@@ -65,12 +64,6 @@
 @import url('./blocks/popup/__figure/popup__figure.css');
 @import url('./blocks/popup/__image/popup__image.css');
 @import url('./blocks/popup/__caption/popup__caption.css');
-/* NotFaund */
-@import url('./blocks/not-found/not-found.css');
-@import url('./blocks/not-found/__image/not-found__image.css');
-@import url('./blocks/not-found/__title/not-found__title.css');
-@import url('./blocks/not-found/__text/not-found__text.css');
-@import url('./blocks/not-found/__button-to-main/not-found__button-to-main.css');
 /* Register */
 @import url('./blocks/register/register.css');
 @import url('./blocks/register/__container/register__container.css');

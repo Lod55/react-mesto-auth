@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from './Header';
 
-const HeaderWithMain = () => {
+const HeaderWithMain = (props) => {
+  let {
+    onSignOut,
+    userData
+  } = props;
 
   // Стейт бургер-меню 
   const [isActive, setIsActive] = useState(false);
@@ -30,14 +33,14 @@ const HeaderWithMain = () => {
             : ""}`}>
         <ul className="header__list">
           <li>
-            <p className="header__email">Email@email.ru</p>
+            <p className="header__email">{userData}</p>
           </li>
           <li>
-            <Link
+            <button
               className="button header__button header__button_type_exit"
-              to="/sign-in">
+              onClick={onSignOut}>
               Выйти
-              </Link>
+              </button>
           </li>
         </ul>
       </nav>

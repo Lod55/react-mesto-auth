@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
   // Дефолтное значение инпутов
@@ -26,7 +25,6 @@ const Login = ({ onLogin }) => {
   const [data, setData] = useState(initialData);
   const [validations, setValidations] = useState(initialInputsValid);
   const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
-  const history = useHistory();
 
   // Функции компонента
   // --Проверка валидности формы 
@@ -80,7 +78,6 @@ const Login = ({ onLogin }) => {
 
     onLogin(data)
       .then(resetForm)
-      .then(() => history.push('/'))
       .catch(err => {
         setErrorsValid((data) => ({
           ...data,

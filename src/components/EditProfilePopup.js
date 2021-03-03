@@ -38,13 +38,20 @@ const EditProfilePopup = (props) => {
   const [validations, setValidations] = useState(initialInputsValid);
   const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
 
+  // --Хук Юз Эффект для отображения актуальных данных о пользователе
+  useEffect(() => {
+    setData(data => ({
+      author: currentUser.name || '',
+      about: currentUser.about || ''
+    }));
+  }, [currentUser]);
+
   // Функции компонента
   // --Проверка валидности формы 
   // --Проверка валидности инпуты
   // --Ресет формы 
   // --Закрытие формы
   // --Сабмит формы
-  // --Хук Юз Эффект для отображения актуальных данных о пользователе
   const checkFormValid = () => {
     if (!validations.author || !validations.about) {
       return setValidations((data) => ({
@@ -101,13 +108,6 @@ const EditProfilePopup = (props) => {
     });
     resetForm()
   }
-
-  useEffect(() => {
-    setData(data => ({
-      author: currentUser.name || '',
-      about: currentUser.about || ''
-    }));
-  }, [currentUser]);
 
   return (
     <PopupWithForm

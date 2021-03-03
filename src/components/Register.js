@@ -84,16 +84,20 @@ const Register = ({ onRegister }) => {
 
     // Проверяем совпадение паролей
     if (data.password !== data.confirmation) {
+
       setValidations((data) => ({
         ...data,
         password: false,
-        confirmation: false
+        confirmation: false,
+        form: false
       }));
+
       setData((data) => ({
         ...data,
         password: '',
         confirmation: ''
       }));
+
       setErrorsValid((data) => ({
         ...data,
         password: 'Пароли не совпадают',
