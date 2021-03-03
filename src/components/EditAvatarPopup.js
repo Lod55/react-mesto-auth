@@ -22,8 +22,7 @@ const EditAvatarPopup = (props) => {
 
   // Дефолтное значение ошибок валидации и сабмита
   const initialErrorsValid = {
-    avatar: '',
-    submit: ''
+    avatar: ''
   }
 
   // Стейты компонента

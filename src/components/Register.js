@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Register = ({ onRegister }) => {
   // Дефолтное значение инпутов
@@ -21,8 +21,7 @@ const Register = ({ onRegister }) => {
   const initialErrorsValid = {
     email: '',
     password: '',
-    confirmation: '',
-    submit: ''
+    confirmation: ''
   }
 
   // Стейты компонента
@@ -30,7 +29,6 @@ const Register = ({ onRegister }) => {
   const [validations, setValidations] = useState(initialInputsValid);
   const [errorsValid, setErrorsValid] = useState(initialErrorsValid);
 
-  const history = useHistory();
 
   // Функции компонента
   // --Проверка валидности формы 
@@ -109,12 +107,8 @@ const Register = ({ onRegister }) => {
     // Запрос на сервер и обработка результата
     onRegister(data)
       .then(resetForm)
-      .then(() => history.push('/sign-in'))
       .catch(err => {
-        setErrorsValid((data) => ({
-          ...data,
-          submit: err.message || 'Что то пошло не так'
-        }));
+        console.log(err.message || 'Что то пошло не так')
       })
   }
 

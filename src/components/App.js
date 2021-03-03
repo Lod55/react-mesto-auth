@@ -2,18 +2,25 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
+// popup components
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import RemovePlacePopup from './RemovePlacePopup';
-import ProtectedRoute from "./ProtectedRoute";
-import Places from "./Places";
+import InfoTooltip from './InfoTooltip';
+
+// pages components
+import ProtectedRoute from "./ProtectedRoute"
 import Register from './Register';
 import Login from './Login';
+import HeaderWithMain from './HeaderWithMain';
 import HeaderWithRegister from './HeaderWithRegister';
 import HeaderWithLogin from './HeaderWithLogin'
+import Main from './Main';
 import Footer from './Footer';
+
+// api
 import * as auth from '../utils/auth';
 import api from '../utils/api.js'
 
@@ -24,6 +31,7 @@ const App = () => {
   }
 
   // Стейт переменные компонента
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -38,6 +46,7 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [data, setData] = useState(initialData);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const history = useHistory();
 
@@ -64,7 +73,8 @@ const App = () => {
     setSelectedCard({
       isOpen: false,
       owner: { name: '' }
-    });
+    })
+    setIsInfoTooltipPopupOpen(false)
   }
 
   // функции отправки информации на сервер
@@ -153,7 +163,7 @@ const App = () => {
             setData({
               email: res.data.email
             })
-            history.push('/places');
+            history.push('/mesto');
           }
         })
         .catch(() => history.push('/sign-in'));
@@ -165,15 +175,23 @@ const App = () => {
   }, [tokenCheck])
 
   const handleRegister = ({ password, email }) => {
-    return auth.register(password, email)
+    return auth.register({ password, email })
       .then(res => {
         if (!res || res.statusCode === 400) throw new Error(`Ошибка: ${res.message}`);
+        setIsInfoTooltipPopupOpen(true);
+        setIsSuccess(true);
+        history.push('/sign-in')
         return res;
+      })
+      .catch(err => {
+        setIsInfoTooltipPopupOpen(true);
+        setIsSuccess(false);
+        return err;
       })
   }
 
   const handleLogin = ({ password, email }) => {
-    return auth.authorize(password, email)
+    return auth.authorize({ password, email })
       .then(res => {
         if (!res || res.statusCode === 400 || res.statusCode === 401) throw new Error(`Ошибка: ${res.message}`);
         if (res.token) {
@@ -196,25 +214,24 @@ const App = () => {
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
           <ProtectedRoute
-            path="/places"
-            component={Places}
-            loggedIn={loggedIn}
-            userEmail={data.email}
-            onSignOut={handleSignOut}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onCardLike={handleCardLike}
-            onCardTrash={handleTrashClick}
-            isLoading={isLoading} />
+            path="/mesto"
+            loggedIn={loggedIn}>
 
-          <Route exact path="/">
-            {loggedIn
-              ? <Redirect to="/places" />
-              : <Redirect to="/sign-in" />}
-          </Route>
+            <HeaderWithMain
+              onSignOut={handleSignOut}
+              userEmail={data.email}
+            />
+
+            <Main onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              onCardClick={handleCardClick}
+              cards={cards}
+              onCardLike={handleCardLike}
+              onCardTrash={handleTrashClick}
+              isLoading={isLoading}
+            />
+          </ProtectedRoute>
 
           <Route path='/sign-in' exact>
             <HeaderWithLogin />
@@ -224,6 +241,12 @@ const App = () => {
           <Route path='/sign-up' exact>
             <HeaderWithRegister />
             <Register onRegister={handleRegister} />
+          </Route>
+
+          <Route path="*">
+            {loggedIn
+              ? <Redirect to="/mesto" />
+              : <Redirect to="/sign-in" />}
           </Route>
         </Switch>
 
@@ -257,6 +280,13 @@ const App = () => {
           card={selectedCard}
           onClose={closeAllPopups}
         />
+
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeAllPopups}
+          isSuccess={isSuccess}
+        />
+
       </CurrentUserContext.Provider>
     </div>
   )

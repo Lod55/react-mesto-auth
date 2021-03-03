@@ -64,6 +64,8 @@
 @import url('./blocks/popup/__figure/popup__figure.css');
 @import url('./blocks/popup/__image/popup__image.css');
 @import url('./blocks/popup/__caption/popup__caption.css');
+@import url('./blocks/popup/__image-tooltip/popup__image-tooltip.css');
+@import url('./blocks/popup/__tooltip/popup__tooltip.css');
 /* Register */
 @import url('./blocks/register/register.css');
 @import url('./blocks/register/__container/register__container.css');

@@ -25,8 +25,7 @@ const AddPlacePopup = (props) => {
   // Дефолтное значение ошибок валидации и сабмита
   const initialErrorsValid = {
     name: '',
-    link: '',
-    submit: ''
+    link: ''
   }
 
   // Стейты компонента

@@ -29,8 +29,7 @@ const EditProfilePopup = (props) => {
   // Дефолтное значение ошибок валидации и сабмита
   const initialErrorsValid = {
     author: '',
-    about: '',
-    submit: ''
+    about: ''
   }
 
   // Стейты компонента

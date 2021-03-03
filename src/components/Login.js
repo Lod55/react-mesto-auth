@@ -17,8 +17,7 @@ const Login = ({ onLogin }) => {
   // Дефолтное значение ошибок валидации и сабмита
   const initialErrorsValid = {
     email: '',
-    password: '',
-    submit: ''
+    password: ''
   };
 
   // Стейты компонента
@@ -79,10 +78,7 @@ const Login = ({ onLogin }) => {
     onLogin(data)
       .then(resetForm)
       .catch(err => {
-        setErrorsValid((data) => ({
-          ...data,
-          submit: err.message || 'Что то пошло не так'
-        }));
+        console.log(err.message || 'Что то пошло не так')
       })
   }
 
