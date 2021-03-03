@@ -3,7 +3,7 @@ import PopupWithForm from './PopupWithForm';
 
 const AddPlacePopup = (props) => {
   // Диструктуризированная переменная с пропсами
-  let {
+  const {
     onAddPlace,
     isOpen,
     onClose
@@ -54,7 +54,7 @@ const AddPlacePopup = (props) => {
   }
 
   const handleChange = (e) => {
-    let { name, value, validity, validationMessage } = e.target;
+    const { name, value, validity, validationMessage } = e.target;
 
     checkFormValid();
 
@@ -95,71 +95,57 @@ const AddPlacePopup = (props) => {
 
   return (
     <PopupWithForm
-      name="popup-add-card"
+      name="add-card"
       title="Новое место"
+      textButton="Создать"
       isOpen={isOpen}
       onClose={handleClose}
+      onSubmit={handleSubmit}
+      validationForm={validations.form}
     >
-      <form
-        className="popup__form"
-        name="popup-add-card"
-        id="popup-add-card"
-        onSubmit={handleSubmit}
-      >
-        <input
-          className={`popup__input popup__input_type_place-name 
+      <input
+        className={`popup__input popup__input_type_place-name 
         ${!validations.name
-              ? ('popup__input_state_invalid')
-              : ('')
-            }`}
-          type="text"
-          placeholder="Название"
-          name="name"
-          id="popup-input-place-name"
-          minLength="2"
-          maxLength="30"
-          value={data.name}
-          onChange={handleChange}
-          required
-        />
-        <span
-          id="popup-input-place-name-error"
-          className="popup__error">
-          {errorsValid.name}
-        </span>
+            ? ('popup__input_state_invalid')
+            : ('')
+          }`}
+        type="text"
+        placeholder="Название"
+        name="name"
+        id="popup-input-place-name"
+        minLength="2"
+        maxLength="30"
+        value={data.name}
+        onChange={handleChange}
+        required
+      />
+      <span
+        id="popup-input-place-name-error"
+        className="popup__error">
+        {errorsValid.name}
+      </span>
 
-        <input
-          className={`popup__input popup__input_type_photo 
+      <input
+        className={`popup__input popup__input_type_photo 
         ${!validations.link
-              ? ('popup__input_state_invalid')
-              : ('')
-            }`}
-          type="url"
-          placeholder="Ссылка на картинку"
-          id="popup-input-url"
-          name="link"
-          minLength="7"
-          maxLength="300"
-          value={data.link}
-          onChange={handleChange}
-          required
-        />
-        <span
-          id="popup-input-url-error"
-          className="popup__error">
-          {errorsValid.link}
-        </span>
-
-        <button
-          className={`button popup__button-submit 
-          ${!validations.form
-              ? 'popup__button-submit_invalid'
-              : ''
-            }`}
-          type="submit">
-          Создать
-        </button>
-      </form>
+            ? ('popup__input_state_invalid')
+            : ('')
+          }`}
+        type="url"
+        placeholder="Ссылка на картинку"
+        id="popup-input-url"
+        name="link"
+        minLength="7"
+        maxLength="300"
+        value={data.link}
+        onChange={handleChange}
+        required
+      />
+      <span
+        id="popup-input-url-error"
+        className="popup__error">
+        {errorsValid.link}
+      </span>
     </PopupWithForm>
   );
 }

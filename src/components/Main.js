@@ -5,7 +5,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const Main = (props) => {
   // Диструктуризированная переменная с пропсами
-  let {
+  const {
     isLoading,
     cards,
     onEditAvatar,

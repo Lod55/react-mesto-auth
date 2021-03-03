@@ -5,13 +5,20 @@ class Api {
     this._groupId = groupId;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
   getInitialCards() {
     return fetch(`${this._address}/${this._groupId}/cards`, {
       headers: {
         authorization: this._token
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(this._checkResponse)
   }
 
   getInfoUser() {
@@ -20,7 +27,7 @@ class Api {
         authorization: this._token
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(this._checkResponse)
   }
 
   setInfoUser({ author, about }) {
@@ -35,7 +42,7 @@ class Api {
         about,
       })
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(this._checkResponse)
   }
 
   setCard({ name, link }) {
@@ -50,7 +57,7 @@ class Api {
         link
       })
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(this._checkResponse)
   }
 
   removeCard(id) {
@@ -60,7 +67,7 @@ class Api {
         authorization: this._token,
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(this._checkResponse)
   }
 
   changeLikeCardStatus(id, isLiked) {
@@ -70,7 +77,7 @@ class Api {
         authorization: this._token,
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(this._checkResponse)
   }
 
   setUserAvatar({ avatar }) {
@@ -84,7 +91,7 @@ class Api {
         avatar,
       })
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(this._checkResponse)
   }
 }
 

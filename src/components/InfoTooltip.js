@@ -4,7 +4,7 @@ import success from '../images/success.svg';
 
 const InfoTooltip = (props) => {
   // Диструктуризированная переменная с пропсами
-  let {
+  const {
     isOpen,
     onClose,
     isSuccess

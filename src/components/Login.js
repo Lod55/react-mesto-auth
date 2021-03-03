@@ -46,7 +46,7 @@ const Login = ({ onLogin }) => {
   }
 
   const handleChange = (e) => {
-    let { name, value, validity, validationMessage } = e.target;
+    const { name, value, validity, validationMessage } = e.target;
 
     checkFormValid();
 

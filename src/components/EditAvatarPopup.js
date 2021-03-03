@@ -3,7 +3,7 @@ import PopupWithForm from './PopupWithForm';
 
 const EditAvatarPopup = (props) => {
   // Диструктуризированная переменная с пропсами
-  let {
+  const {
     onUpdateAvatar,
     isOpen,
     onClose
@@ -51,7 +51,7 @@ const EditAvatarPopup = (props) => {
   }
 
   const handleChange = (e) => {
-    let { name, value, validity, validationMessage } = e.target;
+    const { name, value, validity, validationMessage } = e.target;
 
     checkFormValid();
 
@@ -91,49 +91,35 @@ const EditAvatarPopup = (props) => {
 
   return (
     <PopupWithForm
-      name="popup-add-avatar"
+      name="add-avatar"
       title="Обновить аватар"
+      textButton="Обновить"
       isOpen={isOpen}
       onClose={handleClose}
+      onSubmit={handleSubmit}
+      validationForm={validations.form}
     >
-      <form
-        className="popup__form"
-        name="popup-add-avatar"
-        id="popup-add-avatar"
-        onSubmit={handleSubmit}
-      >
-        <input
-          className={`popup__input popup__input_type_photo 
+      <input
+        className={`popup__input popup__input_type_photo 
         ${!validations.avatar
-              ? ('popup__input_state_invalid')
-              : ('')
-            }`}
-          type="url"
-          placeholder="Ссылка на аватар"
-          name='avatar'
-          id="popup-input-url-avatar"
-          onChange={handleChange}
-          minLength="7"
-          maxLength="300"
-          value={data.avatar}
-          required
-        />
-        <span
-          id="popup-input-url-avatar-error"
-          className="popup__error">
-          {errorsValid.avatar}
-        </span>
-
-        <button
-          className={`button popup__button-submit 
-          ${!validations.form
-              ? 'popup__button-submit_invalid'
-              : ''
-            }`}
-          type="submit">
-          Обновить
-        </button>
-      </form>
+            ? ('popup__input_state_invalid')
+            : ('')
+          }`}
+        type="url"
+        placeholder="Ссылка на аватар"
+        name='avatar'
+        id="popup-input-url-avatar"
+        onChange={handleChange}
+        minLength="7"
+        maxLength="300"
+        value={data.avatar}
+        required
+      />
+      <span
+        id="popup-input-url-avatar-error"
+        className="popup__error">
+        {errorsValid.avatar}
+      </span>
     </PopupWithForm>
   );
 }

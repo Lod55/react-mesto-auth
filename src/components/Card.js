@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const Card = (props) => {
   // Диструктуризированная переменная с пропсами
-  let {
+  const {
     card,
     onCardLike,
     onImageClick,

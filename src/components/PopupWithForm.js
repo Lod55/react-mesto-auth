@@ -1,12 +1,15 @@
 import React from 'react';
 
 const PopupWithForm = (props) => {
-  let {
+  const {
     children,
     name,
     title,
+    textButton,
     isOpen,
-    onClose
+    onClose,
+    onSubmit,
+    validationForm
   } = props;
 
   return (
@@ -18,7 +21,23 @@ const PopupWithForm = (props) => {
           onClick={onClose}
         />
         <h2 className="popup__title">{title}</h2>
-        {children}
+        <form
+          className={"popup__form"}
+          name={name}
+          id={name}
+          onSubmit={onSubmit}
+        >
+          {children}
+          <button
+            className={`button popup__button-submit 
+            ${!validationForm
+                ? 'popup__button-submit_invalid'
+                : ''
+              }`}
+            type={"submit"}>
+            {textButton}
+          </button>
+        </form>
       </div>
     </section>
   );

@@ -4,7 +4,7 @@ import PopupWithForm from './PopupWithForm';
 
 const EditProfilePopup = (props) => {
   // Диструктуризированная переменная с пропсами
-  let {
+  const {
     onUpdateUser,
     isOpen,
     onClose
@@ -23,7 +23,7 @@ const EditProfilePopup = (props) => {
   const initialInputsValid = {
     author: false,
     about: false,
-    form: true
+    form: false
   }
 
   // Дефолтное значение ошибок валидации и сабмита
@@ -66,7 +66,7 @@ const EditProfilePopup = (props) => {
   }
 
   const handleChange = (e) => {
-    let { name, value, validity, validationMessage } = e.target;
+    const { name, value, validity, validationMessage } = e.target;
 
     checkFormValid();
 
@@ -108,69 +108,56 @@ const EditProfilePopup = (props) => {
     <PopupWithForm
       name="popup-profile"
       title="Редактировать профиль"
+      textButton="Сохранить"
       isOpen={isOpen}
       onClose={handleClose}
+      onSubmit={handleSubmit}
+      validationForm={validations.form}
     >
-      <form
-        className="popup__form"
-        name="popup-edit-profile"
-        id="popup-edit-profile"
-        onSubmit={handleSubmit}
-      >
-        <input
-          className={`popup__input popup__input_type_author 
+      <input
+        className={`popup__input popup__input_type_author 
         ${!validations.author
-              ? 'popup__input_state_invalid'
-              : ''
-            }`}
-          type="text"
-          placeholder="Ваше имя"
-          id="popup-input-name"
-          name='author'
-          minLength="2"
-          maxLength="40"
-          value={data.author}
-          onChange={handleChange}
-          required
-        />
-        <span
-          id="popup-input-name-error"
-          className="popup__error">
-          {errorsValid.author}
-        </span>
+            ? 'popup__input_state_invalid'
+            : ''
+          }`}
+        type="text"
+        placeholder="Ваше имя"
+        id="popup-input-name"
+        name='author'
+        minLength="2"
+        maxLength="40"
+        value={data.author}
+        onChange={handleChange}
+        required
+      />
+      <span
+        id="popup-input-name-error"
+        className="popup__error">
+        {errorsValid.author}
+      </span>
 
-        <input
-          className={`popup__input popup__input_type_status 
+      <input
+        className={`popup__input popup__input_type_status 
         ${!validations.about
-              ? 'popup__input_state_invalid'
-              : ''
-            }`}
-          type="text"
-          placeholder="Расскажите о себе"
-          id="popup-input-status"
-          name='about'
-          minLength="2"
-          maxLength="200"
-          value={data.about}
-          onChange={handleChange}
-          required
-        />
-        <span
-          id="popup-input-status-error"
-          className="popup__error">
-          {errorsValid.about}
-        </span>
+            ? 'popup__input_state_invalid'
+            : ''
+          }`}
+        type="text"
+        placeholder="Расскажите о себе"
+        id="popup-input-status"
+        name='about'
+        minLength="2"
+        maxLength="200"
+        value={data.about}
+        onChange={handleChange}
+        required
+      />
+      <span
+        id="popup-input-status-error"
+        className="popup__error">
+        {errorsValid.about}
+      </span>
 
-        <button
-          className={`button popup__button-submit 
-          ${!validations.form
-              ? 'popup__button-submit_invalid'
-              : ''
-            }`}
-          type="submit">
-          Сохранить
-        </button>
-      </form>
     </PopupWithForm>
   );
 }

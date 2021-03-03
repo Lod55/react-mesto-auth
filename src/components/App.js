@@ -14,9 +14,7 @@ import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from "./ProtectedRoute"
 import Register from './Register';
 import Login from './Login';
-import HeaderWithMain from './HeaderWithMain';
-import HeaderWithRegister from './HeaderWithRegister';
-import HeaderWithLogin from './HeaderWithLogin'
+import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 
@@ -212,16 +210,16 @@ const App = () => {
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
+        <Header
+          loggedIn={loggedIn}
+          onSignOut={handleSignOut}
+          userEmail={data.email}
+        />
+
         <Switch>
           <ProtectedRoute
             path="/mesto"
             loggedIn={loggedIn}>
-
-            <HeaderWithMain
-              onSignOut={handleSignOut}
-              userEmail={data.email}
-            />
-
             <Main onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
@@ -234,12 +232,10 @@ const App = () => {
           </ProtectedRoute>
 
           <Route path='/sign-in' exact>
-            <HeaderWithLogin />
             <Login onLogin={handleLogin} />
           </Route>
 
           <Route path='/sign-up' exact>
-            <HeaderWithRegister />
             <Register onRegister={handleRegister} />
           </Route>
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 const ImagePopup = (props) => {
   // Диструктуризированная переменная с пропсами
-  let {
+  const {
     card,
     onClose
   } = props;
