@@ -4,10 +4,10 @@
 
 ## О проекте
 Реализована функциональность авторизации и регистрации для проекта Mesto Russia на React с помощью 
--[X] JS (Api fetch)
--[X] React JS
--[X] JSX
--[X] React Router (useLocation, Route, Switch, Redirect, useHistory)
+- [X] JS (Api fetch)
+- [X] React JS
+- [X] JSX
+- [X] React Router (useLocation, Route, Switch, Redirect, useHistory)
 
 ## В работе реализовано:
 - [X] Регистрация
