@@ -3,11 +3,6 @@ import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 // popup components
-import ImagePopup from './ImagePopup';
-import EditProfilePopup from './EditProfilePopup';
-import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup';
-import RemovePlacePopup from './RemovePlacePopup';
 import InfoTooltip from './InfoTooltip';
 
 // pages components
@@ -30,17 +25,8 @@ const App = () => {
 
   // Стейт переменные компонента
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isRemovePlacePopupOpen, setIsRemovePlacePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({
-    isOpen: false,
-    owner: { name: '' }
-  });
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [useCardId, setUseCardId] = useState('');
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [data, setData] = useState(initialData);
@@ -48,82 +34,70 @@ const App = () => {
 
   const history = useHistory();
 
-
-  // функции открытия попапов
-  const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
-  const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
-  const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
-  const handleCardClick = (data) => setSelectedCard({
-    isOpen: true,
-    ...data
-  });
-  const handleTrashClick = (card) => {
-    setIsRemovePlacePopupOpen(true)
-    setUseCardId(card._id)
-  }
-
-  // функция закрытия всех попапов
-  const closeAllPopups = () => {
-    setIsEditProfilePopupOpen(false)
-    setIsAddPlacePopupOpen(false)
-    setIsEditAvatarPopupOpen(false)
-    setIsRemovePlacePopupOpen(false)
-    setSelectedCard({
-      isOpen: false,
-      owner: { name: '' }
-    })
+  // функция закрытия попапа
+  const closePopup = () => {
     setIsInfoTooltipPopupOpen(false)
   }
 
-  // функции отправки информации на сервер
+
+  // ---------- Функции основного Api ----------
+  // Проверка наличия ответа сервера
+  const responseCheck = (res) => {
+    if (!res) throw new Error(`Ошибка: ${res.message}`);
+  }
+
+  // Отправка информации на сервер
   const handleUpdateUser = ({ author, about }) => {
-    api.setInfoUser({ author, about })
+    return api.setInfoUser({ author, about })
       .then(res => {
+        responseCheck(res);
         setCurrentUser(res);
-        closeAllPopups();
+        return res;
       })
-      .catch(err => console.log(`Error: ${err}`));
   }
 
+  // Изменение аватара на сервере и отрисовка
   const handleUpdateAvatar = ({ avatar }) => {
-    api.setUserAvatar({ avatar })
+    return api.setUserAvatar({ avatar })
       .then(res => {
+        responseCheck(res);
         setCurrentUser(res);
-        closeAllPopups();
+        return res;
       })
-      .catch(err => console.log(`Error: ${err}`));
   }
 
+  // Добавление новой карточки на сервер и отрисовка
   const handleAddPlaceSubmit = ({ name, link }) => {
-    api.setCard({ name, link })
+    return api.setCard({ name, link })
       .then(res => {
+        responseCheck(res);
         setCards([res, ...cards]);
-        closeAllPopups();
+        return res;
       })
-      .catch(err => console.log(`Error: ${err}`));
   }
 
-  // функция контоля состояния лайка и работа с состоянием на сервере
+  // Контоль состояния лайка и работа с состоянием на сервере
   const handleCardLike = (card) => {
     const isLiked = card.likes.some(item => item._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, isLiked)
+    return api.changeLikeCardStatus(card._id, isLiked)
       .then(res => {
+        responseCheck(res);
         const newCards = cards.map(item => item._id === card._id ? res : item);
         setCards(newCards);
+        return res;
       })
-      .catch(err => console.log(`Error: ${err}`));
   }
 
-  // функция удаления карточки с сервера
-  const handleCardDelete = () => {
-    api.removeCard(useCardId)
+  // Удаления карточки с сервера
+  const handleCardDelete = (useCardId) => {
+    return api.removeCard(useCardId)
       .then(res => {
+        responseCheck(res);
         const newCards = cards.filter(item => item._id === useCardId ? null : item);
         setCards(newCards);
-        closeAllPopups();
+        return res;
       })
-      .catch(err => console.log(`Error: ${err}`));
   }
 
   useEffect(() => {
@@ -144,12 +118,8 @@ const App = () => {
       .catch(err => console.log(`Error: ${err}`));
   }, []);
 
-  // Функции запросов api/auth
-  // -- Запрос на проверку токера
-  // -- Использование проверки токена вызывает юз эффект
-  // -- Запрос Регистрации
-  // -- Запрос Авторизации
-  // -- Обнуление данных, выход из системы
+  // ---------- Функции запросов api/auth ----------
+  // Проверка токена пользователя на подленность на сервере
   const tokenCheck = useCallback(() => {
     const jwt = localStorage.getItem('jwt');
 
@@ -172,6 +142,7 @@ const App = () => {
     tokenCheck();
   }, [tokenCheck])
 
+  // Регистрации пользователя на сервере
   const handleRegister = ({ password, email }) => {
     return auth.register({ password, email })
       .then(res => {
@@ -188,18 +159,27 @@ const App = () => {
       })
   }
 
+  // Авторизации пользователя
   const handleLogin = ({ password, email }) => {
     return auth.authorize({ password, email })
       .then(res => {
         if (!res || res.statusCode === 400 || res.statusCode === 401) throw new Error(`Ошибка: ${res.message}`);
         if (res.token) {
+          setIsInfoTooltipPopupOpen(true);
+          setIsSuccess(true);
           setLoggedIn(true);
           localStorage.setItem('jwt', res.token);
         };
       })
-      .then(res => tokenCheck())
+      .then(tokenCheck)
+      .catch(err => {
+        setIsInfoTooltipPopupOpen(true);
+        setIsSuccess(false);
+        return err;
+      })
   }
 
+  // Выход из системы
   const handleSignOut = () => {
     localStorage.removeItem('jwt');
     setData(initialData);
@@ -220,13 +200,13 @@ const App = () => {
           <ProtectedRoute
             path="/mesto"
             loggedIn={loggedIn}>
-            <Main onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handleCardClick}
-              cards={cards}
+            <Main
+              onCardDelete={handleCardDelete}
               onCardLike={handleCardLike}
-              onCardTrash={handleTrashClick}
+              onAddPlaceSubmit={handleAddPlaceSubmit}
+              onUpdateAvatar={handleUpdateAvatar}
+              onUpdateUser={handleUpdateUser}
+              cards={cards}
               isLoading={isLoading}
             />
           </ProtectedRoute>
@@ -248,38 +228,9 @@ const App = () => {
 
         <Footer />
 
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
-
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-        />
-
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
-
-        <RemovePlacePopup
-          isOpen={isRemovePlacePopupOpen}
-          onClose={closeAllPopups}
-          onDeleteCard={handleCardDelete}
-        />
-
-        <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups}
-        />
-
         <InfoTooltip
           isOpen={isInfoTooltipPopupOpen}
-          onClose={closeAllPopups}
+          onClose={closePopup}
           isSuccess={isSuccess}
         />
 
